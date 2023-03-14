@@ -2,17 +2,17 @@
   "name": "lab4-loginsystem",
   "version": "1.0.0",
   "description": "Lab 4 - Backend Development",
-  "main": "database.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/FJohnsson91/Lab4-LoginSystem.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Fredrik Johnsson",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/FJohnsson91/Lab4-LoginSystem/issues"
