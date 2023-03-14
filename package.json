@@ -1,0 +1,32 @@
+{
+  "name": "lab4-loginsystem",
+  "version": "1.0.0",
+  "description": "Lab 4 - Backend Development",
+  "main": "database.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FJohnsson91/Lab4-LoginSystem.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FJohnsson91/Lab4-LoginSystem/issues"
+  },
+  "homepage": "https://github.com/FJohnsson91/Lab4-LoginSystem#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "node.js": "^0.0.1-security",
+    "nodemon": "^2.0.21",
+    "sqlite3": "^5.1.5"
+  }
+}
