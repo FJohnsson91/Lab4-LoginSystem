@@ -8,7 +8,7 @@ function createToken(payload) {
   return token
 }
 
-function authenticatedUserInfo(req) {
+function authenticatedToken(req) {
   let authHeader = req.headers['authorization']
   if (!authHeader) {
     return null
@@ -27,4 +27,4 @@ function authenticatedUserInfo(req) {
   }
 }
 
-module.exports = { createToken, authenticatedUserInfo }
+module.exports = { createToken, authenticatedToken }
