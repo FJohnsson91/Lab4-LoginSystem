@@ -12,9 +12,9 @@ async function userExists(username) {
   })
 }
 
-async function registerUser(username, password) {
-  const sql = `INSERT INTO Users (username, password) VALUES ($username, $password)`
-  const params = { $username: username, $password: password }
+async function registerUser(username, name, role, password) {
+  const sql = `INSERT INTO Users (username, name, role, password) VALUES ($username, $name, $role, $password)`
+  const params = { $username: username, $name: name, $role: role, $password: password }
 
   return new Promise((resolve, reject) => {
     db.run(sql, params, (error) => {
