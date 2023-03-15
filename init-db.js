@@ -10,7 +10,7 @@ db.serialize(() => {
 	CREATE TABLE Users (
 		username TEXT NOT NULL PRIMARY KEY,
 		name TEXT,
-		role TEXT CHECK(role in ('student1', 'student2', 'teacher', 'admin')),
+		role TEXT CHECK(role in ('STUDENT1', 'STUDENT2', 'TEACHER', 'ADMIN')),
 		password TEXT NOT NULL
 	)`, {}, error => { errors++ })
 })

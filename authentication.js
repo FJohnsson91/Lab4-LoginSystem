@@ -1,8 +1,7 @@
-const { userExists } = require('./database.js')
-
 const jwt = require('jsonwebtoken')
-require("dotenv").config()
+const { userExists } = require('./database')
 
+require("dotenv").config()
 const secret = process.env.SECRET
 
 function createToken(payload) {
@@ -10,37 +9,37 @@ function createToken(payload) {
   return token
 }
 
-function authenticatedToken(req) {
-  if (!req.cookies.userToken) {
-    res.redirect("/login")
-  } else if (jwt.verify(req.cookies.userToken, secret)) {
-    next()
-  } else {
-    res.redirect("/login")
-  }
+function verifyToken(object) {
+  let token = jwt.verify(object, secret)
+  return token
 }
 
-async function userFromToken(req) {
+async function getToken(req) {
   const token = req.cookies.jwt
   const decryptedToken = jwt.verify(token, secret)
   const user = await userExists(decryptedToken.username)
   return user
 }
 
-function roleFromToken(requiredRoles) {
-  return async (req, res, next) => {
-    try {
-      const user = await userFromToken(req)
-
-      if (requiredRoles.includes(user.role)) {
-        next()
-      } else {
-        res.sendStatus(401)
-      }
-    } catch (error) {
-      console.log(error)
-    }
+function checkToken(req, res, next) {
+  const token = req.cookies.jwt
+  if (!token) return res.redirect('/identify')
+  try {
+    jwt.verify(token, secret)
+    next()
+  } catch (error) {
+    console.error(error)
+    res.status(403).redirect('/identify')
   }
 }
 
-module.exports = { createToken, authenticatedToken }
+const checkRole = roles => async (req, res, next) => {
+  try {
+    const user = await getToken(req)
+    roles.includes(user.role) ? next() : res.sendStatus(401)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+module.exports = { checkRole, checkToken, getToken, verifyToken, createToken }

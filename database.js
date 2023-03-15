@@ -3,15 +3,6 @@ const sqlite3 = require('sqlite3').verbose()
 const file = 'Users.db'
 const db = new sqlite3.Database(file)
 
-async function userExists(username) {
-  return new Promise((resolve, reject) => {
-    db.all(`SELECT * FROM Users WHERE username = $username `, { $username: username }, (error, rows) => {
-      if (error) reject(error)
-      else resolve(rows.length > 0)
-    })
-  })
-}
-
 async function registerUser(username, name, role, password) {
   const sql = `INSERT INTO Users (username, name, role, password) VALUES ($username, $name, $role, $password)`
   const params = { $username: username, $name: name, $role: role, $password: password }
@@ -24,7 +15,19 @@ async function registerUser(username, name, role, password) {
   })
 }
 
-async function getAllUsers() {
+function userExists(username) {
+  return new Promise((resolve, reject) => {
+    db.get(`SELECT * FROM Users WHERE username = $username `, { $username: username }, (error, rows) => {
+      if (error)
+        reject(error)
+      else {
+        resolve(rows)
+      }
+    })
+  })
+}
+
+function getUsers() {
   return new Promise((resolve, reject) => {
     db.all("SELECT * FROM Users", (err, res) => {
       if (err) {
@@ -35,10 +38,9 @@ async function getAllUsers() {
     })
   })
 }
-
-async function getAllStudents() {
+function getStudents() {
   return new Promise((resolve, reject) => {
-    db.all("SELECT * FROM Users WHERE role LIKE 'STUDENT%'", (err, res) => {
+    db.all("SELECT * FROM Users where role like 'STUDENT%'", (err, res) => {
       if (err) {
         reject(err)
       } else {
@@ -48,19 +50,4 @@ async function getAllStudents() {
   })
 }
 
-function getPasswordForUser(username) {
-  return new Promise((resolve, reject) => {
-    const sql = "SELECT password FROM Users where username = ?"
-    db.get(sql, [username], (err, row) => {
-      if (err) {
-        return reject(err)
-      }
-      if (!row) {
-        return reject(new Error("User not found"));
-      }
-      resolve(row.password)
-    })
-  })
-}
-
-module.exports = { userExists, registerUser, getAllUsers, getAllStudents, getPasswordForUser }
+module.exports = { registerUser, userExists, getUsers, getStudents }
