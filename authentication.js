@@ -1,3 +1,5 @@
+const { userExists } = require('./database.js')
+
 const jwt = require('jsonwebtoken')
 require("dotenv").config()
 
@@ -9,21 +11,35 @@ function createToken(payload) {
 }
 
 function authenticatedToken(req) {
-  let authHeader = req.headers['authorization']
-  if (!authHeader) {
-    return null
+  if (!req.cookies.userToken) {
+    res.redirect("/login")
+  } else if (jwt.verify(req.cookies.userToken, secret)) {
+    next()
+  } else {
+    res.redirect("/login")
   }
+}
 
-  let token = authHeader.substring(7)
+async function userFromToken(req) {
+  const token = req.cookies.jwt
+  const decryptedToken = jwt.verify(token, secret)
+  const user = await userExists(decryptedToken.username)
+  return user
+}
 
-  try {
-    let decoded = jwt.verify(token, secret)
-    console.log('Decoded token: ', decoded)
-    return decoded
+function roleFromToken(requiredRoles) {
+  return async (req, res, next) => {
+    try {
+      const user = await userFromToken(req)
 
-  } catch (error) {
-    console.log('Decoding JWT failed: ' + error.message)
-    return null
+      if (requiredRoles.includes(user.role)) {
+        next()
+      } else {
+        res.sendStatus(401)
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 

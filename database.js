@@ -48,4 +48,19 @@ async function getAllStudents() {
   })
 }
 
-module.exports = { userExists, registerUser, getAllUsers, getAllStudents }
+function getPasswordForUser(username) {
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT password FROM Users where username = ?"
+    db.get(sql, [username], (err, row) => {
+      if (err) {
+        return reject(err)
+      }
+      if (!row) {
+        return reject(new Error("User not found"));
+      }
+      resolve(row.password)
+    })
+  })
+}
+
+module.exports = { userExists, registerUser, getAllUsers, getAllStudents, getPasswordForUser }
