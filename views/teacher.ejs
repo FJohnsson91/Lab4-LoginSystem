@@ -1,0 +1,16 @@
+<h1>Welcome to the Teacher Page!</h1>
+
+<h1>List of your students:</h1>
+
+<% students.forEach(function(student) { %>
+	<ul>
+		<h3>Username: <%= student.username %>
+		</h3>
+		<li>Name: <%= student.name %>
+		</li>
+		<li>Role: <%= student.role %>
+		</li>
+		<li>Password: <%= student.password %>
+		</li>
+	</ul>
+	<% }); %>
