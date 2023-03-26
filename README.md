@@ -3,6 +3,6 @@ This is a website that uses a special code called JSON web tokens to make sure t
 # How to use this project.
 Start your prefered IDE and clone this repo (https://github.com/FJohnsson91/Lab4-LoginSystem.git)
 Start the terminal in your IDE and run the command 'npm install' or 'npm i'. (You must have node installed on your computer)
-After all the needed packages is installed you can now use this project. Run the command 'npm start' to start the serer.
+After all the needed packages is installed you can now use this project. Run the command 'npm start' to start the server.
 And last go to your web browser and enter http://localhost:1337
 When you are done go back to your IDE and press CTRL + C.
