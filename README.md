@@ -1,2 +1,2 @@
-# Lab4-LoginSystem
-Lab 4 - Backend Development
+# Lab 4 - Backend Development
+This is a website that uses a special code called JSON web tokens to make sure that only certain people can access certain parts of the site. The website has different sections that only students, teachers, or administrators can enter, depending on what kind of user they are. When someone logs in, the website saves a small file in their internet browser called a cookie. This cookie tells the website who the person is and what parts of the site they are allowed to see. The website keeps track of all the users in a special database called SQLite, which makes it easy to keep everything organized.
