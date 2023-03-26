@@ -16,7 +16,7 @@ function verifyToken(object) {
 
 async function getToken(req) {
   const token = req.cookies.jwt
-  const decryptedToken = jwt.verify(token, secret)
+  const decryptedToken = verifyToken(token, secret)
   const user = await userExists(decryptedToken.username)
   return user
 }
@@ -25,7 +25,7 @@ function checkToken(req, res, next) {
   const token = req.cookies.jwt
   if (!token) return res.redirect('/identify')
   try {
-    jwt.verify(token, secret)
+    verifyToken(token, secret)
     next()
   } catch (error) {
     console.error(error)
